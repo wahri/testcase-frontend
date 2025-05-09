@@ -20,19 +20,25 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true } // Tambahkan metadata untuk auth
+    meta: { requiresAuth: true }
   },
   {
     path: '/item',
     name: 'Item',
     component: Item,
-    meta: { requiresAuth: true } // Tambahkan metadata untuk auth
+    meta: { requiresAuth: true }
   },
   {
     path: '/transaction',
     name: 'Transaction',
     component: Transaction,
-    meta: { requiresAuth: true } // Tambahkan metadata untuk auth
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/transaction/detail/item/:id',
+    name: 'TransactionDetailItem',
+    component: () => import('@/views/TransactionDetailItem.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

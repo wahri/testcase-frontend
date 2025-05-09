@@ -54,11 +54,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LoginLayout from '@/layouts/LoginLayout.vue'
+import api from '@/lib/axios'
+import { useUserStore } from '@/stores/user'
 
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
 const router = useRouter()
+const userStore = useUserStore()
 
 function togglePassword() {
     showPassword.value = !showPassword.value
@@ -66,34 +69,24 @@ function togglePassword() {
 
 const handleLogin = async () => {
     try {
-        const response = await fetch('http://elsoft-testcase-backend.test/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username.value,
-                password: password.value,
-            })
+        const res = await api.post('/login', {
+            username: username.value,
+            password: password.value
         })
 
-        if (!response.ok) {
-            const error = await response.json()
-            throw new Error(error.message || 'Login gagal')
-        }
+        const { access_token, refresh_token, user, company } = res.data
 
-        const data = await response.json()
+        userStore.setToken(access_token)
+        userStore.setUser(user)
 
-        // Simpan token ke localStorage
-        localStorage.setItem('access_token', data.access_token)
-        localStorage.setItem('refresh_token', data.refresh_token)
-        localStorage.setItem('company', data.company)
+        localStorage.setItem('access_token', access_token)
+        localStorage.setItem('refresh_token', refresh_token)
+        localStorage.setItem('company', JSON.stringify(company))
 
-        // Redirect ke dashboard
         router.push('/dashboard')
     } catch (error) {
         console.error('Login error:', error)
-        alert(error.message)
+        alert(error.response?.data?.message || 'Login gagal')
     }
 }
 </script>
