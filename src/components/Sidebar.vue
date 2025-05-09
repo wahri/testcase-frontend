@@ -19,13 +19,13 @@
             </li>
             <li>
                 <router-link to="/item" class="">
-                    <div class="parent-icon"><i class="bx bx-home"></i></div>
+                    <div class="parent-icon"><i class="bx bx-atom"></i></div>
                     <div class="menu-title">Master Item</div>
                 </router-link>
             </li>
             <li>
                 <router-link to="/transaction" class="">
-                    <div class="parent-icon"><i class="bx bx-home"></i></div>
+                    <div class="parent-icon"><i class="bx bx-cart-alt"></i></div>
                     <div class="menu-title">Transaction Item</div>
                 </router-link>
             </li>
